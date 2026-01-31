@@ -1,0 +1,11 @@
+node_modules
+**/node_modules
+**/dist
+**/.DS_Store
+.env
+.env.*
+
+# Vite
+apps/frontend/dist
+
+# Postgres/Redis volumes are docker-managed
