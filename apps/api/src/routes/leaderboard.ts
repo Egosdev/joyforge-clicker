@@ -4,9 +4,13 @@ import { pgPool } from '../db';
 
 const router = Router();
 
+async function safeMGet(keys: string[]) {
+  return keys.length ? redis.mGet(keys) : [];
+}
+
 async function hydrateUsernames(userIds: string[]): Promise<Record<string, string>> {
   const keys = userIds.map((id) => `user:${id}:username`);
-  const cached = await redis.mGet(keys);
+  const cached = await safeMGet(keys);
   const map: Record<string, string> = {};
   const missing: string[] = [];
   userIds.forEach((id, i) => {
@@ -26,7 +30,7 @@ async function hydrateUsernames(userIds: string[]): Promise<Record<string, strin
 
 async function hydrateGuildNames(guildIds: string[]): Promise<Record<string, string>> {
   const keys = guildIds.map((id) => `guild:${id}:name`);
-  const cached = await redis.mGet(keys);
+  const cached = await safeMGet(keys);
   const map: Record<string, string> = {};
   const missing: string[] = [];
   guildIds.forEach((id, i) => {

@@ -1,5 +1,5 @@
 import session from 'express-session';
-import { RedisStore } from 'connect-redis';
+import RedisStore from 'connect-redis';
 import type { Express } from 'express';
 import { env, isProd } from './config';
 import { redis } from './redis';
